@@ -2,9 +2,52 @@ import discord
 import os
 import requests
 import json
+import random
 
 #current commands (prefix $): greeting, fact, quote, cat
 client = discord.Client()
+
+sad_words = [
+  'sad',
+   'depressed', 
+   'depressing', 
+   'angry',
+   'pissed', 
+   'miserable'
+]
+
+sykkuno = [
+"Um...",
+"Ehh",
+"I’m a streamer for fun.",
+"I’m a small streamer for fun.",
+"I just got lucky.",
+"Girls just aren't into me like that.",
+"Good enough for me.",
+"l'm just over for dinner.",
+"Mornin' Rae! (Everytime Valkyrae goes online in the morning)",
+"I just got new lights.",
+"The uber bill is getting expensive.",
+"I need to pay my water bill, guys.",
+"That's more than I make in a week.",
+"I'm charging in like a maniac!",
+"*covers his mouth with his hand everytime he laughs*",
+"Hi Corpse!",
+"I told him i would protect him!",
+"I can't kill him! (Corpse)",
+"I'm the biggest Toast simp",
+"Oh Jesus! ... ",
+"You guys actually killed him ?! You're crazy!",
+"It definitely could've been me",
+"Arf arf!",
+"Babushka, Babushka!"
+]
+
+encouragements = [
+  'Cheer up!',
+  'Hang in there!',
+  'You got this!'
+]
 
 def get_fact():
   response = requests.get("https://uselessfacts.jsph.pl/random.json?language=en")
@@ -34,19 +77,27 @@ async def on_message(message):
   if message.author == client.user:
     return
     
-  if message.content.startswith('$greeting'):
+  msg = message.content
+
+  if msg.startswith('$greeting'):
     await message.channel.send("Hello!")
 
-  if message.content.startswith('$fact'):
+  if msg.startswith('$fact'):
     fact = get_fact()
     await message.channel.send(fact)
     
-  if message.content.startswith('$quote'):
+  if msg.startswith('$quote'):
     quote = get_quote()
     await message.channel.send(quote)
 
-  if message.content.startswith('$cat'):
+  if any(word in msg for word in sad_words):
+    await message.channel.send(random.choice(encouragements))
+
+  if msg.startswith('$cat'):
     cat = get_cat()
     await message.channel.send(cat)
+  
+  if msg.startswith('$sykkuno'):
+    await message.channel.send(random.choice(sykkuno))
 
 client.run(os.getenv('TOKEN'))
