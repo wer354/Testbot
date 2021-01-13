@@ -4,17 +4,7 @@ import requests
 import json
 import random
 
-#current commands (prefix $): greeting, fact, quote, cat
 client = discord.Client()
-
-sad_words = [
-  'sad',
-   'depressed', 
-   'depressing', 
-   'angry',
-   'pissed', 
-   'miserable'
-]
 
 sykkuno = [
 "Um...",
@@ -40,13 +30,8 @@ sykkuno = [
 "You guys actually killed him ?! You're crazy!",
 "It definitely could've been me",
 "Arf arf!",
-"Babushka, Babushka!"
-]
-
-encouragements = [
-  'Cheer up!',
-  'Hang in there!',
-  'You got this!'
+"Babushka, Babushka!",
+"That's crazy"
 ]
 
 def get_fact():
@@ -89,9 +74,6 @@ async def on_message(message):
   if msg.startswith('$quote'):
     quote = get_quote()
     await message.channel.send(quote)
-
-  if any(word in msg for word in sad_words):
-    await message.channel.send(random.choice(encouragements))
 
   if msg.startswith('$cat'):
     cat = get_cat()
